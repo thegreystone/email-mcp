@@ -25,6 +25,7 @@ trap 'rm -rf "$STAGE"' EXIT
 
 NAME="$(basename "$BINARY")"
 mkdir -p "$STAGE/server"
+cp "$HERE/../docs/assets/email-mcp-icon.png" "$STAGE/icon.png"
 cp "$BINARY" "$STAGE/server/$NAME"
 chmod +x "$STAGE/server/$NAME"
 sed -e "s/__VERSION__/${VERSION}/g" -e "s/__BINARY__/${NAME}/g" -e "s/__PLATFORM__/${PLATFORM}/g" \

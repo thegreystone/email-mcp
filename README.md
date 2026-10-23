@@ -1,9 +1,11 @@
+<img src="docs/assets/email-mcp-icon.png" alt="Email MCP folded-envelope icon" width="96" />
+
 # Email MCP Server
 
-[![Build](https://github.com/thegreystone/mcp-email/actions/workflows/build.yml/badge.svg)](https://github.com/thegreystone/mcp-email/actions/workflows/build.yml)
-[![Release](https://img.shields.io/github/v/release/thegreystone/mcp-email)](https://github.com/thegreystone/mcp-email/releases/latest)
+[![Build](https://github.com/thegreystone/email-mcp/actions/workflows/build.yml/badge.svg)](https://github.com/thegreystone/email-mcp/actions/workflows/build.yml)
+[![Release](https://img.shields.io/github/v/release/thegreystone/email-mcp)](https://github.com/thegreystone/email-mcp/releases/latest)
 [![Java 21+](https://img.shields.io/badge/Java-21%2B-blue)](https://adoptium.net/)
-[![Quarkus](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fthegreystone%2Fmcp-email%2Fmaster%2Fpom.xml&query=%2F%2F*%5Blocal-name()%3D'quarkus.platform.version'%5D&label=Quarkus&color=blueviolet)](https://quarkus.io/)
+[![Quarkus](https://img.shields.io/badge/dynamic/xml?url=https%3A%2F%2Fraw.githubusercontent.com%2Fthegreystone%2Femail-mcp%2Fmaster%2Fpom.xml&query=%2F%2F*%5Blocal-name()%3D'quarkus.platform.version'%5D&label=Quarkus&color=blueviolet)](https://quarkus.io/)
 [![GraalVM Native](https://img.shields.io/badge/GraalVM-native--image-orange)](https://www.graalvm.org/)
 [![License: BSD-3](https://img.shields.io/badge/License-BSD--3-green)](https://opensource.org/licenses/BSD-3-Clause)
 
@@ -67,10 +69,17 @@ All tools (except `listAccounts`) require an `account` parameter — the name of
 
 ## Quick Start
 
-The fastest way to get started is to download a pre-built release from the [Releases page](https://github.com/thegreystone/mcp-email/releases/latest). Two options are available:
+**Plugin users:** install **Email MCP** from the [AI Plugins marketplace](https://github.com/thegreystone/ai-plugins)
+for Claude Code or Codex. See the [plugin guide](docs/PLUGINS.md) for installation and local credential setup.
 
-**Claude Desktop users:** the simplest install is the MCP Bundle, `mcp-email-server-<version>-macos-aarch64.mcpb`
-or `mcp-email-server-<version>-windows-x86_64.mcpb`, see [Setting up with Claude Desktop](#setting-up-with-claude-desktop).
+The fastest way to get started is to download a pre-built release from the [Releases page](https://github.com/thegreystone/email-mcp/releases/latest). Two options are available:
+
+New builds use the `email-mcp-server-` filename prefix shown below. Older releases use `mcp-email-server-`;
+use the filenames attached to the release you download. When upgrading a manually configured client,
+update its executable or JAR path to the new filename.
+
+**Claude Desktop users:** the simplest install is the MCP Bundle, `email-mcp-server-<version>-macos-aarch64.mcpb`
+or `email-mcp-server-<version>-windows-x86_64.mcpb`, see [Setting up with Claude Desktop](#setting-up-with-claude-desktop).
 
 ### Option A: Native Binary (recommended)
 
@@ -78,24 +87,24 @@ No Java installation required. Download the binary for your platform:
 
 | Platform | File |
 |----------|------|
-| Linux x86_64 | `mcp-email-server-<version>-linux-x86_64` |
-| Linux aarch64 | `mcp-email-server-<version>-linux-aarch64` |
-| macOS Apple Silicon | `mcp-email-server-<version>-macos-aarch64` |
-| Windows x86_64 | `mcp-email-server-<version>-windows-x86_64.exe` |
+| Linux x86_64 | `email-mcp-server-<version>-linux-x86_64` |
+| Linux aarch64 | `email-mcp-server-<version>-linux-aarch64` |
+| macOS Apple Silicon | `email-mcp-server-<version>-macos-aarch64` |
+| Windows x86_64 | `email-mcp-server-<version>-windows-x86_64.exe` |
 
-On Linux and macOS, make the binary executable: `chmod +x mcp-email-server-*`
+On Linux and macOS, make the binary executable: `chmod +x email-mcp-server-*`
 
 The macOS binary is signed and notarized, so Gatekeeper accepts it as downloaded. The one exception is a
 first launch while offline, because Gatekeeper fetches the notarization ticket from Apple; if that
 happens, clear the quarantine flag once:
 
 ```bash
-xattr -d com.apple.quarantine mcp-email-server-<version>-macos-aarch64
+xattr -d com.apple.quarantine email-mcp-server-<version>-macos-aarch64
 ```
 
 ### Option B: Uber-jar
 
-Runs on any platform with [Java 21+](https://adoptium.net/) installed. Download `mcp-email-server-<version>-runner.jar`.
+Runs on any platform with [Java 21+](https://adoptium.net/) installed. Download `email-mcp-server-<version>-runner.jar`.
 
 Then configure your MCP client (see [Claude Desktop](#setting-up-with-claude-desktop) or [Claude Code](#setting-up-with-claude-code) below).
 
@@ -208,8 +217,8 @@ When `EMAIL_ALLOW_SENDING` is unset (or `false`), the four outbound tools above 
 The easiest way is the MCP Bundle. There is no config file to edit:
 
 1. Download the `.mcpb` file for your platform from the
-   [Releases page](https://github.com/thegreystone/mcp-email/releases/latest):
-   `mcp-email-server-<version>-macos-aarch64.mcpb` or `mcp-email-server-<version>-windows-x86_64.mcpb`.
+   [Releases page](https://github.com/thegreystone/email-mcp/releases/latest):
+   `email-mcp-server-<version>-macos-aarch64.mcpb` or `email-mcp-server-<version>-windows-x86_64.mcpb`.
 
 2. Install it: double-click the file, or in Claude Desktop open *Settings → Extensions → Advanced settings →
    Install Extension…* and pick the file. Claude Desktop shows its standard unsigned-extension notice, because
@@ -247,7 +256,7 @@ If you prefer the manual route:
 {
   "mcpServers": {
     "email": {
-      "command": "C:\\Users\\YourName\\path\\to\\mcp-email-server-windows-x86_64.exe",
+      "command": "C:\\Users\\YourName\\path\\to\\email-mcp-server-windows-x86_64.exe",
       "args": [
         "-Dquarkus.mcp.server.stdio.enabled=true",
         "-Dquarkus.config.locations=.",
@@ -284,7 +293,7 @@ If you prefer the manual route:
         "-Dquarkus.config.locations=.",
         "-Duser.dir=C:\\Users\\YourName\\claude",
         "-jar",
-        "C:\\Users\\YourName\\path\\to\\mcp-email-server-runner.jar"
+        "C:\\Users\\YourName\\path\\to\\email-mcp-server-runner.jar"
       ],
       "env": {
         "EMAIL_ACCOUNTS_WORK_IMAP_HOST": "imap.example.com",
@@ -319,7 +328,7 @@ If you prefer the manual route:
 {
   "mcpServers": {
     "email": {
-      "command": "/path/to/mcp-email-server-linux-x86_64",
+      "command": "/path/to/email-mcp-server-linux-x86_64",
       "args": [
         "-Dquarkus.mcp.server.stdio.enabled=true"
       ],
@@ -352,7 +361,7 @@ If you prefer the manual route:
       "args": [
         "-Dquarkus.mcp.server.stdio.enabled=true",
         "-jar",
-        "/path/to/mcp-email-server-runner.jar"
+        "/path/to/email-mcp-server-runner.jar"
       ],
       "env": {
         "EMAIL_ACCOUNTS_WORK_IMAP_HOST": "imap.example.com",
@@ -387,7 +396,7 @@ images, running the integration tests, packing the MCP Bundles and signing the b
 
 - **`AccessDeniedException: C:\WINDOWS\system32\config`**: on Windows, Claude Desktop may launch the server with `C:\WINDOWS\system32` as the working directory, causing Quarkus to fail when scanning for config files. The `-Duser.dir` argument in the example config overrides the working directory, and `-Dquarkus.config.locations=.` prevents Quarkus from scanning restricted system directories. Point `-Duser.dir` to any directory your user can write to.
 - **Server disconnects immediately**: make sure `-Dquarkus.mcp.server.stdio.enabled=true` is in the `args` before `-jar`.
-- **No log output visible**: Quarkus logs go to `mcp-email-server.log` (in the working directory), not to stdout/stderr, to avoid interfering with the STDIO transport. Check that file for errors. With the MCP Bundle the working directory is your home directory, so the log is `~/mcp-email-server.log`.
+- **No log output visible**: Quarkus logs go to `email-mcp-server.log` (in the working directory), not to stdout/stderr, to avoid interfering with the STDIO transport. Check that file for errors. With the MCP Bundle the working directory is your home directory, so the log is `~/email-mcp-server.log`.
 - **Authentication errors**: for Gmail, you need an [App Password](https://myaccount.google.com/apppasswords), not your regular password. Make sure 2-Step Verification is enabled on your Google account first.
 - **"Unknown account" errors**: call `listAccounts` first to see which accounts are configured. Account names are lowercase as defined in the environment variables (e.g., `work`, `gmail`).
 

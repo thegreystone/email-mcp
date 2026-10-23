@@ -23,9 +23,19 @@ jobs:
       - name: Build and test
         run: mvn -B package
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v5
+        with:
+          node-version: '18'
+
+      - name: Check and test Codex launcher
+        run: |
+          node --check plugin-codex/scripts/email-mcp.mjs
+          node --test plugin-codex/tests/launcher.test.mjs
+
       - name: Upload uber-jar
         uses: actions/upload-artifact@v5
         with:
-          name: mcp-email-server
-          path: target/mcp-email-server-*-runner.jar
+          name: email-mcp-server
+          path: target/email-mcp-server-*-runner.jar
           retention-days: 14

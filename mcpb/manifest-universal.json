@@ -11,11 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/thegreystone/mcp-email"
+    "url": "https://github.com/thegreystone/email-mcp"
   },
-  "homepage": "https://github.com/thegreystone/mcp-email",
-  "documentation": "https://github.com/thegreystone/mcp-email/blob/master/README.md",
-  "support": "https://github.com/thegreystone/mcp-email/issues",
+  "homepage": "https://github.com/thegreystone/email-mcp",
+  "documentation": "https://github.com/thegreystone/email-mcp/blob/master/README.md",
+  "support": "https://github.com/thegreystone/email-mcp/issues",
+  "icon": "icon.png",
   "license": "BSD-3-Clause",
   "keywords": [
     "email",
@@ -27,9 +28,9 @@
   ],
   "server": {
     "type": "binary",
-    "entry_point": "server/mcp-email-server-__VERSION__-macos-aarch64",
+    "entry_point": "server/__ARTIFACT_PREFIX__-__VERSION__-macos-aarch64",
     "mcp_config": {
-      "command": "${__dirname}/server/mcp-email-server-__VERSION__-macos-aarch64",
+      "command": "${__dirname}/server/__ARTIFACT_PREFIX__-__VERSION__-macos-aarch64",
       "args": [
         "-Dquarkus.mcp.server.stdio.enabled=true",
         "-Dquarkus.config.locations=.",
@@ -51,10 +52,10 @@
       },
       "platform_overrides": {
         "darwin": {
-          "command": "${__dirname}/server/mcp-email-server-__VERSION__-macos-aarch64"
+          "command": "${__dirname}/server/__ARTIFACT_PREFIX__-__VERSION__-macos-aarch64"
         },
         "win32": {
-          "command": "${__dirname}/server/mcp-email-server-__VERSION__-windows-x86_64.exe"
+          "command": "${__dirname}/server/__ARTIFACT_PREFIX__-__VERSION__-windows-x86_64.exe"
         }
       }
     }

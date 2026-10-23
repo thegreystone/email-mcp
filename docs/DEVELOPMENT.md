@@ -11,7 +11,7 @@ see the [README](../README.md).
 mvn package
 ```
 
-The uber-jar will be at `target/mcp-email-server-<version>-runner.jar`.
+The uber-jar will be at `target/email-mcp-server-<version>-runner.jar`.
 
 ## Native image
 
@@ -21,7 +21,7 @@ The uber-jar will be at `target/mcp-email-server-<version>-runner.jar`.
 mvn package -Dnative -DskipTests
 ```
 
-The native binary will be at `target/mcp-email-server-<version>-runner` (or `.exe` on Windows).
+The native binary will be at `target/email-mcp-server-<version>-runner` (or `.exe` on Windows).
 
 Two integration tests run against the built binary rather than the classes: a sanity test of the MCP
 handshake and PDF extraction, and a mailbox scenario that drives the binary over STDIO against an in-process
@@ -29,7 +29,7 @@ IMAP and SMTP server (GreenMail), reading, moving, drafting and sending. They ar
 named, and the release workflow runs them on every platform's binary:
 
 ```bash
-mvn test-compile failsafe:integration-test failsafe:verify -Dnative.image.path=target/mcp-email-server-<version>-runner
+mvn test-compile failsafe:integration-test failsafe:verify -Dnative.image.path=target/email-mcp-server-<version>-runner
 ```
 
 ## MCP Bundles
@@ -44,7 +44,7 @@ safety switches as `user_config`, mapped to the `EMAIL_ACCOUNTS_DEFAULT_*`, `EMA
 `-Dquarkus.config.locations` arguments as the [Claude Desktop example](../README.md#setting-up-with-claude-desktop) in the README, with the home directory as
 working directory. The packing is [`mcpb/pack.sh`](../mcpb/pack.sh), run on the runner that built the binary so the executable bit survives on macOS.
 
-The release also packs a **universal** bundle, `mcp-email-server-<version>-universal.mcpb`, with the macOS
+The release also packs a **universal** bundle, `email-mcp-server-<version>-universal.mcpb`, with the macOS
 and Windows binaries and a manifest whose `platform_overrides` pick one per operating system
 ([`mcpb/manifest-universal.json`](../mcpb/manifest-universal.json)). It is for the cases where one file has to
 serve both platforms; direct downloads should keep using the per-platform bundles, which are smaller.
@@ -56,10 +56,14 @@ The manual **Bundles** workflow ([`.github/workflows/bundle.yml`](../.github/wor
 bundles for an already published release from its binaries and attaches them: run it from the Actions tab
 with the version, choosing *all*, *macos-only* or *universal*.
 
+The artifact prefix defaults to `email-mcp-server`. To re-pack a release published before the rename,
+choose `mcp-email-server` in the workflow's `artifact_prefix` input. For a local universal pack, pass it as
+the optional fourth argument to `mcpb/pack-universal.sh`.
+
 To try a bundle locally (Git Bash on Windows):
 
 ```bash
-bash mcpb/pack.sh 0.0.0 windows-x86_64 win32 target/mcp-email-server-*-runner.exe target/mcp-email-server-dev.mcpb
+bash mcpb/pack.sh 0.0.0 windows-x86_64 win32 target/email-mcp-server-*-runner.exe target/email-mcp-server-dev.mcpb
 ```
 
 ## Signing the macOS binary
@@ -89,7 +93,10 @@ SimplySign needs an interactive login (OTP from the mobile app), so signing is a
 workflow has published the release. With SimplySign Desktop running and logged in, and `gh` authenticated:
 
 ```powershell
-.\mcpb\Sign-Release.ps1 -Version 1.0.12            # add -NoUpload to inspect target\signed first
+.\mcpb\Sign-Release.ps1 -Version 1.0.14            # add -NoUpload to inspect target\signed first
+
+# An older release with the original artifact filenames:
+.\mcpb\Sign-Release.ps1 -Version 1.0.12 -ArtifactPrefix mcp-email-server
 ```
 
 [`mcpb/Sign-Release.ps1`](../mcpb/Sign-Release.ps1) downloads the Windows binary from the release, signs it

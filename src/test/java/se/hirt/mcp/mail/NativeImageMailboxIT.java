@@ -68,7 +68,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Skipped unless {@code native.image.path} names the binary, as for {@link NativeImageSanityIT}:
  *
  * <pre>
- *   mvn test-compile failsafe:integration-test failsafe:verify -Dnative.image.path=target/mcp-email-server-...-runner
+ *   mvn test-compile failsafe:integration-test failsafe:verify -Dnative.image.path=target/email-mcp-server-...-runner
  * </pre>
  */
 @EnabledIfSystemProperty(named = "native.image.path", matches = ".+")
@@ -110,7 +110,7 @@ class NativeImageMailboxIT {
 		env.put("EMAIL_NETWORK_TIMEOUT", "15");
 		server = new McpStdioClient(binary, workDir, env);
 		var info = server.initialize();
-		assertEquals("mcp-email-server", info.get("name").asText());
+		assertEquals("email-mcp-server", info.get("name").asText());
 	}
 
 	@AfterEach

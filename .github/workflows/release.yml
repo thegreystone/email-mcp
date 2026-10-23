@@ -32,7 +32,7 @@ jobs:
         uses: actions/upload-artifact@v5
         with:
           name: uber-jar
-          path: target/mcp-email-server-*-runner.jar
+          path: target/email-mcp-server-*-runner.jar
 
   # ── Native images ────────────────────────────────────────────────────
   native:
@@ -117,36 +117,36 @@ jobs:
           VERSION="${GITHUB_REF_NAME#v}"
           codesign --force --timestamp --options runtime \
             --sign "$MACOS_SIGNING_IDENTITY" \
-            "target/mcp-email-server-${VERSION}-runner"
-          codesign --verify --strict --verbose=2 "target/mcp-email-server-${VERSION}-runner"
+            "target/email-mcp-server-${VERSION}-runner"
+          codesign --verify --strict --verbose=2 "target/email-mcp-server-${VERSION}-runner"
 
       - name: Sanity test native binary (Unix)
         if: runner.os != 'Windows'
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          mvn -B test-compile failsafe:integration-test failsafe:verify -Dnative.image.path=target/mcp-email-server-${VERSION}-runner
+          mvn -B test-compile failsafe:integration-test failsafe:verify -Dnative.image.path=target/email-mcp-server-${VERSION}-runner
 
       - name: Sanity test native binary (Windows)
         if: runner.os == 'Windows'
         shell: bash
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          mvn -B test-compile failsafe:integration-test failsafe:verify -Dnative.image.path=target/mcp-email-server-${VERSION}-runner.exe
+          mvn -B test-compile failsafe:integration-test failsafe:verify -Dnative.image.path=target/email-mcp-server-${VERSION}-runner.exe
 
       - name: Rename binary (Unix)
         if: runner.os != 'Windows'
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          mv target/mcp-email-server-${VERSION}-runner \
-             target/mcp-email-server-${VERSION}-${{ matrix.suffix }}
+          mv target/email-mcp-server-${VERSION}-runner \
+             target/email-mcp-server-${VERSION}-${{ matrix.suffix }}
 
       - name: Rename binary (Windows)
         if: runner.os == 'Windows'
         shell: bash
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          mv target/mcp-email-server-${VERSION}-runner.exe \
-             target/mcp-email-server-${VERSION}-${{ matrix.suffix }}.exe
+          mv target/email-mcp-server-${VERSION}-runner.exe \
+             target/email-mcp-server-${VERSION}-${{ matrix.suffix }}.exe
 
       # A bare executable cannot be stapled, so Gatekeeper fetches the ticket online
       # on first launch. Notarizing the zipped binary is enough for that lookup.
@@ -158,7 +158,7 @@ jobs:
           NOTARIZATION_TEAM_ID: ${{ secrets.NOTARIZATION_TEAM_ID }}
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          BINARY="target/mcp-email-server-${VERSION}-${{ matrix.suffix }}"
+          BINARY="target/email-mcp-server-${VERSION}-${{ matrix.suffix }}"
           ZIP="$RUNNER_TEMP/notarize.zip"
           ditto -c -k "$BINARY" "$ZIP"
           xcrun notarytool submit "$ZIP" \
@@ -180,17 +180,17 @@ jobs:
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
           bash mcpb/pack.sh "$VERSION" "${{ matrix.suffix }}" "${{ matrix.mcpb_platform }}" \
-            "target/mcp-email-server-${VERSION}-${{ matrix.suffix }}${{ matrix.exe }}" \
-            "target/mcp-email-server-${VERSION}-${{ matrix.suffix }}.mcpb"
+            "target/email-mcp-server-${VERSION}-${{ matrix.suffix }}${{ matrix.exe }}" \
+            "target/email-mcp-server-${VERSION}-${{ matrix.suffix }}.mcpb"
 
       - name: Upload artifact
         uses: actions/upload-artifact@v5
         with:
           name: native-${{ matrix.suffix }}
           path: |
-            target/mcp-email-server-*-${{ matrix.suffix }}
-            target/mcp-email-server-*-${{ matrix.suffix }}.exe
-            target/mcp-email-server-*-${{ matrix.suffix }}.mcpb
+            target/email-mcp-server-*-${{ matrix.suffix }}
+            target/email-mcp-server-*-${{ matrix.suffix }}.exe
+            target/email-mcp-server-*-${{ matrix.suffix }}.mcpb
 
   # ── Create GitHub release with all artifacts ─────────────────────────
   release:
@@ -212,7 +212,7 @@ jobs:
       - name: Package universal MCP bundle
         run: |
           VERSION="${GITHUB_REF_NAME#v}"
-          bash mcpb/pack-universal.sh "$VERSION" artifacts "artifacts/mcp-email-server-${VERSION}-universal.mcpb"
+          bash mcpb/pack-universal.sh "$VERSION" artifacts "artifacts/email-mcp-server-${VERSION}-universal.mcpb"
 
       - name: List artifacts
         run: find artifacts -type f | sort

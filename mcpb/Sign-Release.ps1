@@ -8,9 +8,9 @@
     (OTP from the mobile app) and has no clean headless path on GitHub-hosted runners. This script closes the gap
     after the fact, the same way thegreystone/diskspace does it:
 
-      1. downloads mcp-email-server-<version>-windows-x86_64.exe from the GitHub release,
+      1. downloads email-mcp-server-<version>-windows-x86_64.exe from the GitHub release,
       2. signs it (SHA-256, RFC 3161 timestamp from Certum) and verifies signature + timestamp,
-      3. re-creates mcp-email-server-<version>-windows-x86_64.mcpb around the signed binary,
+      3. re-creates email-mcp-server-<version>-windows-x86_64.mcpb around the signed binary,
       4. uploads both assets back to the release, replacing the unsigned ones,
       5. dispatches the Bundles workflow to re-pack the universal bundle (Linux-only job, for executable bits).
 
@@ -29,17 +29,25 @@
 .PARAMETER NoUpload
     Sign and pack under target\signed but do not touch the GitHub release.
 
+.PARAMETER ArtifactPrefix
+    Release asset prefix. Defaults to email-mcp-server; use mcp-email-server for releases published
+    before the repository rename. The same prefix is passed to the Bundles workflow.
+
 .EXAMPLE
-    .\mcpb\Sign-Release.ps1 -Version 1.0.12
+    .\mcpb\Sign-Release.ps1 -Version 1.0.14
+
+.EXAMPLE
+    .\mcpb\Sign-Release.ps1 -Version 1.0.12 -ArtifactPrefix mcp-email-server
 #>
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $true)] [string] $Version,
     [string] $Thumbprint,
-    [string] $Repo = 'thegreystone/mcp-email',
+    [string] $Repo = 'thegreystone/email-mcp',
     [string] $TimestampUrl = 'http://time.certum.pl',
     [string] $SignTool,
-    [switch] $NoUpload
+    [switch] $NoUpload,
+    [ValidateSet('email-mcp-server', 'mcp-email-server')] [string] $ArtifactPrefix = 'email-mcp-server'
 )
 
 $ErrorActionPreference = 'Stop'
@@ -67,8 +75,8 @@ if (-not $cert) {
 }
 Write-Host "Signing as: $($cert.Subject) (expires $($cert.NotAfter.ToShortDateString()))"
 
-$binary = "mcp-email-server-$Version-windows-x86_64.exe"
-$bundle = "mcp-email-server-$Version-windows-x86_64.mcpb"
+$binary = "$ArtifactPrefix-$Version-windows-x86_64.exe"
+$bundle = "$ArtifactPrefix-$Version-windows-x86_64.mcpb"
 $work = Join-Path (Get-Location) 'target\signed'
 if (Test-Path $work) { Remove-Item -Recurse -Force $work }
 New-Item -ItemType Directory -Force (Join-Path $work 'mcpb\server') | Out-Null
@@ -100,6 +108,7 @@ Invoke-SignAndVerify $exe $binary
 # 3. Re-pack the bundle around the signed binary. The manifest carries no file hashes, so this is a valid bundle.
 Write-Host "Re-packing $bundle..."
 Copy-Item $exe (Join-Path $work "mcpb\server\$binary")
+Copy-Item 'docs\assets\email-mcp-icon.png' (Join-Path $work 'mcpb\icon.png')
 $manifest = Get-Content 'mcpb\manifest.json' -Raw -Encoding UTF8
 $manifest = $manifest.Replace('__VERSION__', $Version).Replace('__BINARY__', $binary).Replace('__PLATFORM__', 'win32')
 [System.IO.File]::WriteAllText((Join-Path $work 'mcpb\manifest.json'), $manifest, (New-Object System.Text.UTF8Encoding $false))
@@ -122,5 +131,5 @@ Write-Host "Done. Release v$Version now has a signed $binary and a $bundle wrapp
 # 5. The universal bundle also contains the Windows binary, but it must be packed on Linux (executable bits),
 #    so hand that to the Bundles workflow.
 Write-Host "Dispatching the Bundles workflow to re-pack the universal bundle around the signed binary..."
-gh workflow run bundle.yml --repo $Repo -f "version=$Version" -f platforms=universal
+gh workflow run bundle.yml --repo $Repo -f "version=$Version" -f platforms=universal -f "artifact_prefix=$ArtifactPrefix"
 if ($LASTEXITCODE -ne 0) { throw 'gh workflow run failed; run the Bundles workflow (universal) by hand from the Actions tab' }

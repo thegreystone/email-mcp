@@ -14,6 +14,14 @@ on:
         description: 'Release version without the "v" prefix (e.g. 1.0.12)'
         required: true
         type: string
+      artifact_prefix:
+        description: 'Asset prefix (use mcp-email-server for releases published before the rename)'
+        required: true
+        type: choice
+        default: email-mcp-server
+        options:
+          - email-mcp-server
+          - mcp-email-server
       platforms:
         description: 'Which bundles to build'
         required: true
@@ -52,15 +60,15 @@ jobs:
         run: |
           mkdir -p target
           gh release download "v${{ inputs.version }}" \
-            --pattern "mcp-email-server-${{ inputs.version }}-${{ matrix.suffix }}${{ matrix.exe }}" --dir target
+            --pattern "${{ inputs.artifact_prefix }}-${{ inputs.version }}-${{ matrix.suffix }}${{ matrix.exe }}" --dir target
 
       - name: Package MCP bundle
         if: inputs.platforms == 'all' || (inputs.platforms == 'macos-only' && matrix.mcpb_platform == 'darwin')
         shell: bash
         run: |
           bash mcpb/pack.sh "${{ inputs.version }}" "${{ matrix.suffix }}" "${{ matrix.mcpb_platform }}" \
-            "target/mcp-email-server-${{ inputs.version }}-${{ matrix.suffix }}${{ matrix.exe }}" \
-            "target/mcp-email-server-${{ inputs.version }}-${{ matrix.suffix }}.mcpb"
+            "target/${{ inputs.artifact_prefix }}-${{ inputs.version }}-${{ matrix.suffix }}${{ matrix.exe }}" \
+            "target/${{ inputs.artifact_prefix }}-${{ inputs.version }}-${{ matrix.suffix }}.mcpb"
 
       - name: Attach bundle to release
         if: inputs.platforms == 'all' || (inputs.platforms == 'macos-only' && matrix.mcpb_platform == 'darwin')
@@ -69,7 +77,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release upload "v${{ inputs.version }}" --clobber \
-            "target/mcp-email-server-${{ inputs.version }}-${{ matrix.suffix }}.mcpb"
+            "target/${{ inputs.artifact_prefix }}-${{ inputs.version }}-${{ matrix.suffix }}.mcpb"
 
   universal:
     if: inputs.platforms == 'all' || inputs.platforms == 'universal'
@@ -86,17 +94,17 @@ jobs:
           mkdir -p target/bin
           for suffix in macos-aarch64 windows-x86_64.exe; do
             gh release download "v${{ inputs.version }}" \
-              --pattern "mcp-email-server-${{ inputs.version }}-${suffix}" --dir target/bin
+              --pattern "${{ inputs.artifact_prefix }}-${{ inputs.version }}-${suffix}" --dir target/bin
           done
 
       - name: Package universal MCP bundle
         run: |
           bash mcpb/pack-universal.sh "${{ inputs.version }}" target/bin \
-            "target/mcp-email-server-${{ inputs.version }}-universal.mcpb"
+            "target/${{ inputs.artifact_prefix }}-${{ inputs.version }}-universal.mcpb" "${{ inputs.artifact_prefix }}"
 
       - name: Attach bundle to release
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh release upload "v${{ inputs.version }}" --clobber \
-            "target/mcp-email-server-${{ inputs.version }}-universal.mcpb"
+            "target/${{ inputs.artifact_prefix }}-${{ inputs.version }}-universal.mcpb"

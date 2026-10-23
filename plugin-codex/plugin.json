@@ -1,0 +1,30 @@
+{
+  "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
+  "name": "email-mcp",
+  "version": "1.0.14",
+  "description": "Read, search, triage and draft email across IMAP and SMTP accounts through a local native MCP server.",
+  "author": { "name": "Marcus Hirt", "url": "https://www.hirt.se" },
+  "homepage": "https://github.com/thegreystone/email-mcp",
+  "repository": "https://github.com/thegreystone/email-mcp",
+  "license": "BSD-3-Clause",
+  "keywords": ["email", "imap", "smtp", "drafts", "productivity", "local"],
+  "extensions": {
+    "com.openai": {
+      "requires_local_executor": true,
+      "onboardingSkill": "./skills/setup/SKILL.md",
+      "interface": {
+        "displayName": "Email MCP",
+        "shortDescription": "Read, triage and draft email",
+        "longDescription": "Connect your IMAP and SMTP accounts to read, search, file and draft email. The server runs locally; sending and permanent deletion are disabled by default. Requires Node.js 18 or newer and a supported native platform. Setup downloads a pinned executable and keeps mailbox settings outside the plugin.",
+        "developerName": "Marcus Hirt",
+        "category": "Productivity",
+        "capabilities": ["Read and search email", "Triage and file messages", "Prepare drafts"],
+        "websiteURL": "https://github.com/thegreystone/email-mcp",
+        "supportURL": "https://github.com/thegreystone/email-mcp/issues",
+        "defaultPrompt": ["List my configured email accounts.", "Help me draft an email."],
+        "composerIcon": "./assets/icon.png",
+        "logo": "./assets/icon.png"
+      }
+    }
+  }
+}

@@ -34,7 +34,7 @@ GNU Affero General Public License v3.0 (AGPL). The AGPL is a copyleft license: i
 the condition that a work which incorporates the library is, when distributed, made available under the
 AGPL as a whole, with its complete corresponding source. The iText source is available from
 https://github.com/itext/itext-java and the complete source of this server from
-https://github.com/thegreystone/mcp-email. Anyone redistributing the release artifacts, or building a
+https://github.com/thegreystone/email-mcp. Anyone redistributing the release artifacts, or building a
 product on them, should read the AGPL and iText's own licensing information and satisfy themselves that
 their use complies; iText also sells a commercial license for those who cannot accept the AGPL terms.
 

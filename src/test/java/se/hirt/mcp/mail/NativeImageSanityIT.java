@@ -46,7 +46,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * Skipped unless {@code native.image.path} system property is set, e.g.:
  *
  * <pre>
- *   mvn verify -Dnative -Dnative.image.path=target/mcp-email-server-...-runner.exe
+ *   mvn verify -Dnative -Dnative.image.path=target/email-mcp-server-...-runner.exe
  * </pre>
  *
  * The release workflow can set this after the native build completes.
@@ -81,8 +81,8 @@ class NativeImageSanityIT {
 			assertNotNull(initResponse, "No response from native binary for initialize");
 			assertTrue(initResponse.contains("\"serverInfo\""),
 					"Initialize response should contain serverInfo: " + initResponse);
-			assertTrue(initResponse.contains("mcp-email-server"),
-					"Server name should be mcp-email-server: " + initResponse);
+			assertTrue(initResponse.contains("email-mcp-server"),
+					"Server name should be email-mcp-server: " + initResponse);
 
 			// Send initialized notification + tools/list
 			String initialized = "{\"method\":\"notifications/initialized\",\"jsonrpc\":\"2.0\"}\n";
@@ -157,7 +157,7 @@ class NativeImageSanityIT {
 			assertNotNull(selfTestResponse, "No response from native binary for selfTestPdf");
 			assertTrue(selfTestResponse.contains("PASSED"),
 					"PDF self-test should pass in native image: " + selfTestResponse);
-			assertTrue(selfTestResponse.contains("Hello from mcp-email-server"),
+			assertTrue(selfTestResponse.contains("Hello from email-mcp-server"),
 					"PDF self-test should contain expected text: " + selfTestResponse);
 
 		} finally {

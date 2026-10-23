@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="650" height="420" viewBox="0 0 650 420" fill="none" role="img" aria-labelledby="title desc">
+  <title id="title">Email MCP envelope (dark)</title>
+  <desc id="desc">A slate folded envelope for light backgrounds.</desc>
+  <defs>
+    <linearGradient id="body-metal" x1="110" y1="170" x2="406" y2="366" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#34465F" />
+      <stop offset=".55" stop-color="#718198" />
+      <stop offset="1" stop-color="#2D405C" />
+    </linearGradient>
+    <linearGradient id="left-metal" x1="84" y1="184" x2="224" y2="342" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#17243A" />
+      <stop offset=".6" stop-color="#4E5D74" />
+      <stop offset="1" stop-color="#8795AA" />
+    </linearGradient>
+    <linearGradient id="right-metal" x1="420" y1="178" x2="300" y2="340" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#51627B" />
+      <stop offset=".55" stop-color="#354860" />
+      <stop offset="1" stop-color="#2D405C" />
+    </linearGradient>
+    <linearGradient id="front-metal" x1="232" y1="251" x2="276" y2="378" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#60728B" />
+      <stop offset=".5" stop-color="#405570" />
+      <stop offset="1" stop-color="#1C2D47" />
+    </linearGradient>
+    <linearGradient id="flap-metal" x1="218" y1="142" x2="282" y2="278" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#60728B" />
+      <stop offset=".5" stop-color="#405570" />
+      <stop offset="1" stop-color="#1C2D47" />
+    </linearGradient>
+  </defs>
+  <g id="email-mcp-mark" transform="translate(-59 -180) scale(1.5)">
+    <rect x="80" y="142" width="352" height="236" rx="30" fill="url(#body-metal)" />
+    <path fill="url(#left-metal)" d="M80 172c0-7 2-14 6-19l159 123L91 371c-7-6-11-15-11-25Z" />
+    <path fill="url(#right-metal)" d="M432 172c0-7-2-14-6-19L267 276l154 95c7-6 11-15 11-25Z" />
+    <path fill="url(#front-metal)" d="m91 371 139-112c16-13 36-13 52 0l139 112c-6 5-13 7-21 7H112c-8 0-15-2-21-7Z" />
+    <path fill="#536176" fill-opacity=".28" d="M86 163c6-8 14-13 26-13h288c12 0 20 5 26 13L282 279c-16 13-36 13-52 0Z" />
+    <path fill="url(#flap-metal)" d="M86 153c6-7 15-11 26-11h288c11 0 20 4 26 11L282 268c-16 13-36 13-52 0Z" />
+  </g>
+</svg>

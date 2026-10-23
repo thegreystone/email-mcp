@@ -29,6 +29,7 @@ Thumbs.db
 .quarkus/
 
 # Log files
+email-mcp-server.log*
 mcp-email-server.log*
 
 # Local Jakarta Mail checkout

@@ -111,7 +111,7 @@ public class EmailTools {
 
 	@Tool(description = "Returns the version of the MCP email server.")
 	String getVersion() {
-		return "mcp-email-server " + applicationVersion;
+		return "email-mcp-server " + applicationVersion;
 	}
 
 	@Tool(description = "List all configured email account names. Call this first to discover available accounts "
@@ -1079,7 +1079,7 @@ public class EmailTools {
 			<x:xmpmeta xmlns:x="adobe:ns:meta/">
 			  <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
 			    <rdf:Description rdf:about="" xmlns:dc="http://purl.org/dc/elements/1.1/">
-			      <dc:title><rdf:Alt><rdf:li xml:lang="x-default">mcp-email-server self-test</rdf:li></rdf:Alt></dc:title>
+			      <dc:title><rdf:Alt><rdf:li xml:lang="x-default">email-mcp-server self-test</rdf:li></rdf:Alt></dc:title>
 			    </rdf:Description>
 			  </rdf:RDF>
 			</x:xmpmeta>
@@ -1096,13 +1096,13 @@ public class EmailTools {
 				PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
 				PdfCanvas canvas = new PdfCanvas(pdf.addNewPage());
 				canvas.beginText().setFontAndSize(font, 12).moveText(50, 750)
-						.showText("Hello from mcp-email-server PDF self-test!").endText();
+						.showText("Hello from email-mcp-server PDF self-test!").endText();
 				canvas.beginText().setFontAndSize(font, 12).moveText(50, 730)
 						.showText("If you can read this, iText PDF text extraction works.").endText();
 			}
 
 			String extracted = PdfTextExtractorUtil.extractText(baos.toByteArray());
-			if (!extracted.contains("Hello from mcp-email-server")) {
+			if (!extracted.contains("Hello from email-mcp-server")) {
 				throw new ToolCallException("PDF self-test FAILED. Unexpected content:\n" + extracted);
 			}
 

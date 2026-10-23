@@ -142,7 +142,7 @@ final class McpStdioClient implements AutoCloseable {
 	JsonNode initialize() throws IOException, InterruptedException {
 		var params = JSON.createObjectNode().put("protocolVersion", "2025-11-25");
 		params.set("capabilities", JSON.createObjectNode());
-		params.set("clientInfo", JSON.createObjectNode().put("name", "mcp-email-it").put("version", "1"));
+		params.set("clientInfo", JSON.createObjectNode().put("name", "email-mcp-it").put("version", "1"));
 		var result = request("initialize", params, Duration.ofSeconds(30)).get("result");
 		notify("notifications/initialized");
 		return result.get("serverInfo");

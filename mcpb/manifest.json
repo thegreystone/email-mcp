@@ -11,11 +11,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/thegreystone/mcp-email"
+    "url": "https://github.com/thegreystone/email-mcp"
   },
-  "homepage": "https://github.com/thegreystone/mcp-email",
-  "documentation": "https://github.com/thegreystone/mcp-email/blob/master/README.md",
-  "support": "https://github.com/thegreystone/mcp-email/issues",
+  "homepage": "https://github.com/thegreystone/email-mcp",
+  "documentation": "https://github.com/thegreystone/email-mcp/blob/master/README.md",
+  "support": "https://github.com/thegreystone/email-mcp/issues",
+  "icon": "icon.png",
   "license": "BSD-3-Clause",
   "keywords": [
     "email",
