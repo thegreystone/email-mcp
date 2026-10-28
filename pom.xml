@@ -33,7 +33,7 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
     <groupId>se.hirt</groupId>
     <artifactId>email-mcp-server</artifactId>
-    <version>1.0.14-SNAPSHOT</version>
+    <version>1.0.15-SNAPSHOT</version>
 
     <properties>
         <compiler-plugin.version>3.15.0</compiler-plugin.version>
