@@ -318,12 +318,14 @@ test('configuration rejects unsupported settings and invalid values without echo
     { env: { EMAIL_ACCOUNTS_HOME_IMAP_HOST: `${secret}\0` } },
     { env: { EMAIL_ALLOW_SENDING: secret } }, { env: { EMAIL_NETWORK_TIMEOUT: secret } },
     { env: { EMAIL_ACCOUNTS_HOME_SMTP_PORT: '65536' } }, { env: [] }, { binaryPath: '' },
+    { env: { EMAIL_ACCOUNTS_HOME_ALLOW_SENDING: secret } }, { env: { EMAIL_ACCOUNTS_HOME_ALLOW_DELETION: 'yes' } },
   ]) {
     assert.throws(() => validateConfig(config), error => !error.message.includes(secret));
   }
   assert.doesNotThrow(() => validateConfig({ env: {
     EMAIL_ACCOUNTS_HOME_IMAP_PORT: '143', EMAIL_ACCOUNTS_HOME_IMAP_SSL: 'false',
     EMAIL_ACCOUNTS_HOME_SMTP_STARTTLS: 'true', EMAIL_NETWORK_TIMEOUT: '0',
+    EMAIL_ACCOUNTS_HOME_ALLOW_SENDING: 'true', EMAIL_ACCOUNTS_HOME_ALLOW_DELETION: 'false',
   } }));
 });
 

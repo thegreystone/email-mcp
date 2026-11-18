@@ -56,10 +56,12 @@ fields for each account. Remove unused empty account template entries. All confi
 | `SMTP_PORT`, `SMTP_STARTTLS`, `SMTP_SSL` | SMTP port and TLS; normally 587 with STARTTLS |
 | `FROM` | Sender address or display name/address; defaults to SMTP username |
 | `DRAFTS_FOLDER`, `SPAM_FOLDER`, `TRASH_FOLDER` | Override automatic special-folder discovery |
+| `ALLOW_SENDING`, `ALLOW_DELETION` | `"true"` or `"false"` for this account, overriding the global setting |
 
 Global settings are `EMAIL_ALLOW_SENDING`, `EMAIL_ALLOW_DELETION` (`"true"` or `"false"`), and
 `EMAIL_NETWORK_TIMEOUT` (nonnegative integer seconds as a string; the server defaults to 60).
-Sending and permanent deletion default to false. The launcher rejects unknown saved settings and
+Sending and permanent deletion default to false. An account's own `ALLOW_SENDING` or `ALLOW_DELETION`
+takes precedence, so `"EMAIL_ACCOUNTS_WORK_ALLOW_SENDING": "true"` enables sending for `WORK` alone. The launcher rejects unknown saved settings and
 incomplete accounts before starting the server. `--show-config` reports effective settings with every
 account password replaced by `[REDACTED]`; configuration errors never include JSON contents.
 

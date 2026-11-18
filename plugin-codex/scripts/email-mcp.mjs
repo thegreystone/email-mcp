@@ -17,7 +17,7 @@ export const RELEASE_ARTIFACT_PREFIX = 'mcp-email-server';
 const REPOSITORY = 'thegreystone/email-mcp';
 const MAX_DOWNLOAD_BYTES = 1024 * 1024 * 1024;
 const INSTALL_TIMEOUT_MS = 5 * 60 * 1000;
-const ACCOUNT_SETTING = /^EMAIL_ACCOUNTS_([A-Z0-9]+(?:_[A-Z0-9]+)*)_(IMAP_(?:HOST|PORT|USERNAME|PASSWORD|SSL)|SMTP_(?:HOST|PORT|USERNAME|PASSWORD|STARTTLS|SSL)|FROM|DRAFTS_FOLDER|SPAM_FOLDER|TRASH_FOLDER)$/;
+const ACCOUNT_SETTING = /^EMAIL_ACCOUNTS_([A-Z0-9]+(?:_[A-Z0-9]+)*)_(IMAP_(?:HOST|PORT|USERNAME|PASSWORD|SSL)|SMTP_(?:HOST|PORT|USERNAME|PASSWORD|STARTTLS|SSL)|FROM|DRAFTS_FOLDER|SPAM_FOLDER|TRASH_FOLDER|ALLOW_SENDING|ALLOW_DELETION)$/;
 const GLOBAL_SETTINGS = new Set(['EMAIL_ALLOW_SENDING', 'EMAIL_ALLOW_DELETION', 'EMAIL_NETWORK_TIMEOUT']);
 const REQUIRED_ACCOUNT_FIELDS = [
   'IMAP_HOST', 'IMAP_USERNAME', 'IMAP_PASSWORD', 'SMTP_HOST', 'SMTP_USERNAME', 'SMTP_PASSWORD',
@@ -120,7 +120,8 @@ export function validateConfig(value) {
     if (typeof item !== 'string' || item.includes('\0')) {
       throw new Error('Email MCP environment values must be strings without NUL characters.');
     }
-    if ((key === 'EMAIL_ALLOW_SENDING' || key === 'EMAIL_ALLOW_DELETION' || /_(?:SSL|STARTTLS)$/.test(key)) &&
+    if ((key === 'EMAIL_ALLOW_SENDING' || key === 'EMAIL_ALLOW_DELETION' ||
+        /_(?:SSL|STARTTLS|ALLOW_SENDING|ALLOW_DELETION)$/.test(key)) &&
         !['true', 'false'].includes(item)) {
       throw new Error('Email MCP boolean settings must be the strings true or false.');
     }

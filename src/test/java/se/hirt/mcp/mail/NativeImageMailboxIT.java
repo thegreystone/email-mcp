@@ -107,6 +107,9 @@ class NativeImageMailboxIT {
 		env.put("EMAIL_ACCOUNTS_TEST_SMTP_STARTTLS", "false");
 		env.put("EMAIL_ACCOUNTS_TEST_FROM", "Test User <" + USER + ">");
 		env.put("EMAIL_ALLOW_SENDING", "true");
+		// Deletion on for the server but off for the account: the account's setting wins.
+		env.put("EMAIL_ALLOW_DELETION", "true");
+		env.put("EMAIL_ACCOUNTS_TEST_ALLOW_DELETION", "false");
 		env.put("EMAIL_NETWORK_TIMEOUT", "15");
 		server = new McpStdioClient(binary, workDir, env);
 		var info = server.initialize();
@@ -180,7 +183,8 @@ class NativeImageMailboxIT {
 		assertError("getTrashFolder with none", call("getTrashFolder", "account", "test"), "Could not auto-detect");
 		assertError("unknown account", call("listFolders", "account", "nope"), "Unknown account");
 		assertError("deleteEmail disabled", call("deleteEmail", "account", "test", "folder", "INBOX", "uid", 1),
-				"deleteEmail is disabled");
+				"deleteEmail is disabled for account 'test'. Permanent deletion is turned off for this account by "
+						+ "EMAIL_ACCOUNTS_TEST_ALLOW_DELETION=false");
 		assertError("bad UIDs", call("moveEmails", "account", "test", "sourceFolder", "INBOX", "uids", "abc",
 				"targetFolder", "Archive", "markRead", false), "Error moving emails");
 	}

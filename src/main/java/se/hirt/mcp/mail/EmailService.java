@@ -64,7 +64,7 @@ public class EmailService {
 
 	// ── Account validation ──────────────────────────────────────────────
 
-	private EmailConfig.AccountConfig getAccountConfig(String accountName) throws MessagingException {
+	EmailConfig.AccountConfig getAccountConfig(String accountName) throws MessagingException {
 		var ac = config.accounts().get(accountName);
 		if (ac == null) {
 			throw new MessagingException(

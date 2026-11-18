@@ -134,6 +134,8 @@ Accounts are defined by convention: `EMAIL_ACCOUNTS_<NAME>_IMAP_*` and `EMAIL_AC
 | `EMAIL_ACCOUNTS_<NAME>_DRAFTS_FOLDER` | no | auto-detected | `INBOX.INBOX.Drafts` |
 | `EMAIL_ACCOUNTS_<NAME>_SPAM_FOLDER` | no | auto-detected | `INBOX.INBOX.Junk` |
 | `EMAIL_ACCOUNTS_<NAME>_TRASH_FOLDER` | no | auto-detected | `INBOX.INBOX.Trash` |
+| `EMAIL_ACCOUNTS_<NAME>_ALLOW_SENDING` | no | `EMAIL_ALLOW_SENDING` | `true` |
+| `EMAIL_ACCOUNTS_<NAME>_ALLOW_DELETION` | no | `EMAIL_ALLOW_DELETION` | `false` |
 
 For Gmail, create an [App Password](https://myaccount.google.com/apppasswords).
 
@@ -204,13 +206,30 @@ Permanent and outbound operations are **opt-in** for safety. By default the dest
 
 Equivalent system properties: `-Demail.allow-deletion=true` and `-Demail.allow-sending=true`. Restart the server after changing them.
 
+#### Per-account overrides
+
+Both flags can also be set for a single account, and the account's own setting takes precedence over the
+server-wide one. Enable a capability for one account only, or keep it off for one account while it is on for the
+rest:
+
+| Variable | Default | Effect |
+|----------|---------|--------|
+| `EMAIL_ACCOUNTS_<NAME>_ALLOW_DELETION` | `EMAIL_ALLOW_DELETION` | `true` or `false` overrides the server-wide setting for this account. |
+| `EMAIL_ACCOUNTS_<NAME>_ALLOW_SENDING` | `EMAIL_ALLOW_SENDING` | `true` or `false` overrides the server-wide setting for this account. |
+
+For example, to let the LLM send from `work` but never from `gmail`, set only
+`EMAIL_ACCOUNTS_WORK_ALLOW_SENDING=true` and leave `EMAIL_ALLOW_SENDING` unset. The check is made by the
+server on every call, against the account the call names, so a mistake in a prompt or skill that picks the
+wrong account still cannot send from it. Equivalent system properties: `-Demail.accounts.<name>.allow-sending`
+and `-Demail.accounts.<name>.allow-deletion`.
+
 #### Enabling permanent deletion
 
-When `EMAIL_ALLOW_DELETION` is unset (or `false`), `deleteEmail` is still listed (so the LLM can discover it and explain the limitation), but every invocation is rejected before any IMAP call is made. Use `moveEmail` to a Trash folder as the safe alternative.
+When deletion is not enabled for the account, by `EMAIL_ACCOUNTS_<NAME>_ALLOW_DELETION` or `EMAIL_ALLOW_DELETION`, `deleteEmail` is still listed (so the LLM can discover it and explain the limitation), but every invocation is rejected before any IMAP call is made. Use `moveEmail` to a Trash folder as the safe alternative.
 
 #### Enabling outbound sending
 
-When `EMAIL_ALLOW_SENDING` is unset (or `false`), the four outbound tools above all return an explanatory error and do nothing. **`saveDraft` is unaffected** — it only writes to the IMAP Drafts folder (see [Special folders](#special-folders)), so the LLM can still compose messages for the user to review and send manually from their mail client. This is the recommended default workflow even when sending is enabled.
+When sending is not enabled for the account, by `EMAIL_ACCOUNTS_<NAME>_ALLOW_SENDING` or `EMAIL_ALLOW_SENDING`, the four outbound tools above all return an explanatory error and do nothing. **`saveDraft` is unaffected** — it only writes to the IMAP Drafts folder (see [Special folders](#special-folders)), so the LLM can still compose messages for the user to review and send manually from their mail client. This is the recommended default workflow even when sending is enabled.
 
 ## Setting up with Claude Desktop
 

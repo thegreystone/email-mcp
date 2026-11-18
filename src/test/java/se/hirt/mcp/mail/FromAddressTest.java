@@ -126,6 +126,14 @@ class FromAddressTest {
 			public Optional<String> trashFolder() {
 				return Optional.empty();
 			}
+
+			public Optional<Boolean> allowSending() {
+				return Optional.empty();
+			}
+
+			public Optional<Boolean> allowDeletion() {
+				return Optional.empty();
+			}
 		};
 	}
 }

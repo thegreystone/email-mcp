@@ -83,6 +83,22 @@ public interface EmailConfig {
 		 * {@link #draftsFolder()}, overridable with the setTrashFolder tool.
 		 */
 		Optional<String> trashFolder();
+
+		/**
+		 * Overrides the server-wide {@code email.allow-sending} for this account: {@code true} lets
+		 * sendEmail, replyEmail and the forward tools transmit from this account even when sending
+		 * is off for the server, {@code false} keeps them disabled for it even when sending is on.
+		 * Unset follows the server-wide setting. {@code EMAIL_ACCOUNTS_<NAME>_ALLOW_SENDING} in the
+		 * environment.
+		 */
+		Optional<Boolean> allowSending();
+
+		/**
+		 * Overrides the server-wide {@code email.allow-deletion} for this account, with the same
+		 * semantics as {@link #allowSending()}. {@code EMAIL_ACCOUNTS_<NAME>_ALLOW_DELETION} in the
+		 * environment.
+		 */
+		Optional<Boolean> allowDeletion();
 	}
 
 	interface ImapConfig {

@@ -21,7 +21,8 @@ or edit global MCP settings to add another copy.
    `..._SMTP_HOST`, `..._SMTP_USERNAME`, and `..._SMTP_PASSWORD` string values. For more accounts,
    replace `DEFAULT` with distinct names such as `HOME` and `WORK`; remove unused empty account entries.
    Gmail requires an app password. Keep `EMAIL_ALLOW_SENDING` and `EMAIL_ALLOW_DELETION` set to `"false"`
-   unless the user explicitly wants those capabilities enabled. A private configuration file contains
+   unless the user explicitly wants those capabilities enabled. To enable one for a single account only,
+   use that account's `EMAIL_ACCOUNTS_<NAME>_ALLOW_SENDING` or `..._ALLOW_DELETION` set to `"true"`. A private configuration file contains
    plaintext passwords; keep it outside repositories and shared folders.
 4. Run `node "<plugin-root>/scripts/email-mcp.mjs" --install` to download and verify the pinned native
    executable, or validate the selected existing executable. This does not connect to a mailbox and can

@@ -529,6 +529,14 @@ class EmailServiceImapTest {
 				return Optional.empty();
 			}
 
+			public Optional<Boolean> allowSending() {
+				return Optional.empty();
+			}
+
+			public Optional<Boolean> allowDeletion() {
+				return Optional.empty();
+			}
+
 			public Optional<String> from() {
 				return from;
 			}

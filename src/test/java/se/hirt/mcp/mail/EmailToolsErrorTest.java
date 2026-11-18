@@ -33,6 +33,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.Map;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -50,7 +51,7 @@ class EmailToolsErrorTest {
 		var service = new EmailService();
 		service.config = new EmailConfig() {
 			public Map<String, AccountConfig> accounts() {
-				return Map.of();
+				return Map.of("a", AccountPermissionsTest.account(Optional.empty(), Optional.empty()));
 			}
 
 			public int networkTimeout() {
