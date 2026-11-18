@@ -108,6 +108,18 @@ class AccountPermissionsTest {
 	}
 
 	@Test
+	void listAccountsReportsTheEffectivePermissionsOfEachAccount() {
+		var tools = tools(false, true, Map.of("work", account(ON, UNSET), "home", account(UNSET, OFF)));
+		assertEquals("Configured accounts: home, work\n" + "home: sending disabled, deletion disabled\n"
+				+ "work: sending enabled, deletion enabled", tools.listAccounts());
+	}
+
+	@Test
+	void listAccountsWithoutAccounts() {
+		assertEquals("No email accounts configured.", tools(true, true, Map.of()).listAccounts());
+	}
+
+	@Test
 	void accountVariableFollowsTheEnvironmentNamingRule() {
 		assertEquals("EMAIL_ACCOUNTS_HOME_ALLOW_SENDING", EmailTools.accountVariable("home", "ALLOW_SENDING"));
 		assertEquals("EMAIL_ACCOUNTS_MY_WORK_ALLOW_DELETION", EmailTools.accountVariable("my-work", "ALLOW_DELETION"));

@@ -8,7 +8,8 @@ description: Read, search, triage, organize and draft email through the Email MC
 Use the Email MCP tools supplied by this plugin. Tool names may carry a client namespace; discover them
 instead of assuming an exact prefix. When tools are unavailable, use the plugin's setup workflow.
 
-- Start with `listAccounts` to discover account names. Select the account from the user's request or
+- Start with `listAccounts` to discover account names and whether each allows sending and deletion;
+  these are set per account. Select the account from the user's request or
   established context; ask when multiple accounts remain plausible. Use `listFolders` or
   `listFolderTree` when a folder name is unknown. Message UIDs are scoped to an account and folder;
   keep that combination with every message reference.

@@ -8,7 +8,8 @@ description: Read, search, triage, organize and draft messages using the Email M
 # Work with email
 
 Discover the available Email MCP tools: clients may add a namespace to their names. Call `listAccounts`
-first and use the returned account names for subsequent calls. If the server is unavailable or accounts
+first and use the returned account names for subsequent calls. It also reports whether each account allows
+sending and deletion; for an account that does not, use `saveDraft` or a move to Trash instead. If the server is unavailable or accounts
 are missing, guide the user to `/plugin`, **Installed**, **email-mcp**, **Configure**, then a new session.
 Never ask the user to paste mailbox passwords into chat.
 

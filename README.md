@@ -29,7 +29,7 @@ For more information, see my [blog](https://hirt.se/blog/?p=1596).
 |------|-------------|
 | **Discovery** | |
 | `getVersion` | Returns the server version |
-| `listAccounts` | List configured account names (call first to discover accounts) |
+| `listAccounts` | List configured account names, and whether each allows sending and deletion (call first to discover accounts) |
 | `listFolders` | List all mail folders (INBOX, Sent, Drafts, etc.) |
 | `listFolderTree` | Full folder hierarchy with message/unread counts |
 | `createFolder` | Create a new mail folder |

@@ -130,7 +130,8 @@ class NativeImageMailboxIT {
 		assertTrue(tools.containsAll(List.of("listAccounts", "readEmail", "moveEmails", "saveDraft", "getTrashFolder")),
 				"tool list: " + tools);
 
-		assertOk("listAccounts", call("listAccounts"), "Configured accounts: test");
+		assertOk("listAccounts", call("listAccounts"),
+				"Configured accounts: test\ntest: sending enabled, deletion disabled");
 		assertOk("listFolderTree", call("listFolderTree", "account", "test"), "INBOX");
 
 		long uid = uidOf("Faktura");
