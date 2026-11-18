@@ -89,15 +89,14 @@ go to stderr; stdout remains the MCP transport.
 
 ## Native release
 
-The launcher pins release **1.0.14** from `thegreystone/email-mcp`. That published release still uses
-the artifact prefix **`mcp-email-server`**, independently of the repository's new name:
+The launcher pins release **1.0.15** from `thegreystone/email-mcp`:
 
 | Host | Native asset |
 |------|--------------|
-| Linux x86_64 | `mcp-email-server-1.0.14-linux-x86_64` |
-| Linux ARM64 | `mcp-email-server-1.0.14-linux-aarch64` |
-| macOS ARM64 | `mcp-email-server-1.0.14-macos-aarch64` |
-| Windows x86_64 | `mcp-email-server-1.0.14-windows-x86_64.exe` |
+| Linux x86_64 | `email-mcp-server-1.0.15-linux-x86_64` |
+| Linux ARM64 | `email-mcp-server-1.0.15-linux-aarch64` |
+| macOS ARM64 | `email-mcp-server-1.0.15-macos-aarch64` |
+| Windows x86_64 | `email-mcp-server-1.0.15-windows-x86_64.exe` |
 
 Intel Macs, Windows ARM64 and other unsupported hosts receive an explicit error; use `EMAIL_MCP_BINARY`
 for a compatible native executable you built yourself. Architecture detection handles Rosetta and

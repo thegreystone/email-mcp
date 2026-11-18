@@ -12,8 +12,8 @@ import { PassThrough, Transform } from 'node:stream';
 import { pipeline } from 'node:stream/promises';
 import { fileURLToPath } from 'node:url';
 
-export const RELEASE_VERSION = '1.0.14';
-export const RELEASE_ARTIFACT_PREFIX = 'mcp-email-server';
+export const RELEASE_VERSION = '1.0.15';
+export const RELEASE_ARTIFACT_PREFIX = 'email-mcp-server';
 const REPOSITORY = 'thegreystone/email-mcp';
 const MAX_DOWNLOAD_BYTES = 1024 * 1024 * 1024;
 const INSTALL_TIMEOUT_MS = 5 * 60 * 1000;

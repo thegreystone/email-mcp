@@ -93,7 +93,7 @@ SimplySign needs an interactive login (OTP from the mobile app), so signing is a
 workflow has published the release. With SimplySign Desktop running and logged in, and `gh` authenticated:
 
 ```powershell
-.\mcpb\Sign-Release.ps1 -Version 1.0.14            # add -NoUpload to inspect target\signed first
+.\mcpb\Sign-Release.ps1 -Version 1.0.15            # add -NoUpload to inspect target\signed first
 
 # An older release with the original artifact filenames:
 .\mcpb\Sign-Release.ps1 -Version 1.0.12 -ArtifactPrefix mcp-email-server

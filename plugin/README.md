@@ -24,8 +24,7 @@ binary. Claude Desktop does not accept this URL-based plugin: install its per-pl
 from [Releases](https://github.com/thegreystone/email-mcp/releases).
 
 This directory contains no executable. The bundle URL in `.claude-plugin/plugin.json` pins release
-`1.0.14`, whose assets still use the `mcp-email-server` filename prefix. The bundle identity remains
-`mcp-email` so existing installations retain their settings. The plugin manifest intentionally omits a
+`1.0.15`. The bundle identity remains `mcp-email` so existing installations retain their settings. The plugin manifest intentionally omits a
 version so marketplace updates track the source commit. After a new native release has been published and
 signed, update the bundle URL to its exact version and filename; see [plugin maintenance](../docs/PLUGINS.md#maintaining-the-release-pins).
 

@@ -12,6 +12,6 @@
   "supportUrl": "https://github.com/thegreystone/email-mcp/issues",
   "license": "BSD-3-Clause",
   "keywords": ["email", "imap", "smtp", "mail", "inbox", "triage"],
-  "mcpServers": "https://github.com/thegreystone/email-mcp/releases/download/v1.0.14/mcp-email-server-1.0.14-universal.mcpb",
+  "mcpServers": "https://github.com/thegreystone/email-mcp/releases/download/v1.0.15/email-mcp-server-1.0.15-universal.mcpb",
   "icon": "./assets/icon.png"
 }

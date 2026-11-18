@@ -1,7 +1,7 @@
 {
   "$schema": "https://agent-plugins.org/schemas/1.0.0/plugin.schema.json",
   "name": "email-mcp",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "Read, search, triage and draft email across IMAP and SMTP accounts through a local native MCP server.",
   "author": { "name": "Marcus Hirt", "url": "https://www.hirt.se" },
   "homepage": "https://github.com/thegreystone/email-mcp",

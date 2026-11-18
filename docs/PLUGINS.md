@@ -70,17 +70,17 @@ and [OpenAI plugin packaging guide](https://developers.openai.com/plugins/build/
 
 ## Maintaining the release pins
 
-The initial plugin packages use release **1.0.14**, which was published before the artifact rename:
+Both plugin packages pin release **1.0.15**:
 
-- Claude uses `mcp-email-server-1.0.14-universal.mcpb` from that release.
-- Codex selects `mcp-email-server-1.0.14-<platform>` from the same release.
+- Claude uses `email-mcp-server-1.0.15-universal.mcpb` from that release.
+- Codex selects `email-mcp-server-1.0.15-<platform>` from the same release.
 
-The repository URL is `thegreystone/email-mcp`. New builds use the `email-mcp-server` filename prefix, but
-renaming the repository did not rename existing release assets. Keep the legacy prefix in these pins until
-a release with the new filenames has been published and signed. Then update the version and prefix
-together in the Claude bundle URL and Codex launcher release constants, along with the Codex manifest
-version and package documentation. Confirm that every supported native asset and the universal bundle
-exist before updating the marketplace packages.
+After each release has been published and signed (including the Windows signing and the universal bundle
+re-pack), update the version in the Claude bundle URL, the Codex launcher's `RELEASE_VERSION`, the Codex
+manifest version and the package documentation together. Confirm that every supported native asset and the
+universal bundle exist before updating the marketplace packages. Releases up to 1.0.14 predate the artifact
+rename and use the `mcp-email-server` filename prefix; `RELEASE_ARTIFACT_PREFIX` in the Codex launcher
+only needs changing to pin one of those.
 
 The Claude manifest intentionally omits a version so its Git subdirectory package follows source commits.
 Its bundle URL pins the server separately. The bundle identity stays `mcp-email` to preserve installed
